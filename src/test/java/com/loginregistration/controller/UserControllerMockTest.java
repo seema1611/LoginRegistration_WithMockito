@@ -26,7 +26,7 @@ public class UserControllerMockTest {
     private MockMvc mockMvc;
 
     @MockBean
-    IUserService loginRegisterService;
+    IUserService userService;
 
 
     private String mapToJson(Object object) throws JsonProcessingException {
@@ -38,7 +38,7 @@ public class UserControllerMockTest {
     public void givenRegisterApi_WhenUserBodySent_ShouldReturnUser() throws Exception {
         User user = new User("Aju", "Aju@123", "ajusanas@gmail.com", "Mumbai");
         String userJson = this.mapToJson(user);
-        given(loginRegisterService.register(any(User.class))).willReturn(user);
+        given(userService.register(any(User.class))).willReturn(user);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/register")
                 .accept(MediaType.APPLICATION_JSON).content(userJson)
                 .contentType(MediaType.APPLICATION_JSON);
