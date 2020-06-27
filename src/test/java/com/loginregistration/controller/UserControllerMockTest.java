@@ -64,4 +64,20 @@ public class UserControllerMockTest {
         String outputInJson = response.getContentAsString();
         Assert.assertEquals(outputInJson, userJson);
     }
+
+    @Test
+    public void givenRegisterApi_WhenUserBodyPassedNull_ShouldReturnFalse() throws Exception {
+        User user = new User();
+        String userJson = this.mapToJson(user);
+        given(userService.register(any(User.class))).willReturn(user);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/register")
+                .accept(MediaType.APPLICATION_JSON).content(userJson)
+                .contentType(MediaType.APPLICATION_JSON);
+        MvcResult mvcResult = this.mockMvc.perform(requestBuilder)
+                .andReturn();
+        System.out.println(mvcResult);
+        MockHttpServletResponse response = mvcResult.getResponse();
+        String outputInJson = response.getContentAsString();
+        Assert.assertEquals(outputInJson, userJson);
+    }
 }
