@@ -42,4 +42,12 @@ public class UserServiceMockTest {
         User loginUser = userService.login("Aju","Aju@123");
         Assert.assertEquals(loginUser,user);
     }
+
+    @Test
+    public void givenUser_WhenRegisterPassedNullData_ShouldReturnFalse() {
+        User user = new User();
+        when(userRepository.save(user)).thenReturn(user);
+        User registeredUser = userService.register(user);
+        Assert.assertEquals(registeredUser, user);
+    }
 }
