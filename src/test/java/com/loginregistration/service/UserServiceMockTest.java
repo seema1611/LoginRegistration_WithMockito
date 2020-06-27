@@ -26,7 +26,7 @@ public class UserServiceMockTest {
     IUserRepository userRepository;
 
     @Test
-    public void givenUserObject_WhenRegister_ShouldReturnUser() {
+    public void givenUser_WhenRegister_ShouldReturnUser() {
         User user = new User("Aju", "Aju@123", "ajusanas@gmail.com", "Mumbai");
         when(userRepository.save(user)).thenReturn(user);
         User registeredUser = userService.register(user);
@@ -34,7 +34,7 @@ public class UserServiceMockTest {
     }
 
     @Test
-    public void givenUserObject_WhenLogin_ShouldReturnUser () {
+    public void givenUser_WhenLogin_ShouldReturnUser () {
         User user = new User("Aju", "Aju@123", "ajusanas@gmail.com", "Mumbai");
         List<User> userList = new ArrayList<>();
         userList.add(user);

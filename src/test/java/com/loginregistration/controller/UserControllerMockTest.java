@@ -35,12 +35,27 @@ public class UserControllerMockTest {
     }
 
     @Test
-    public void givenRegisterApi_WhenUserBodySent_ShouldReturnUser() throws Exception {
+    public void givenRegisterApi_WhenUserBodyPassed_ShouldReturnUser() throws Exception {
         User user = new User("Aju", "Aju@123", "ajusanas@gmail.com", "Mumbai");
         String userJson = this.mapToJson(user);
         given(userService.register(any(User.class))).willReturn(user);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/register")
                 .accept(MediaType.APPLICATION_JSON).content(userJson)
+                .contentType(MediaType.APPLICATION_JSON);
+        MvcResult mvcResult = this.mockMvc.perform(requestBuilder)
+                .andReturn();
+        System.out.println(mvcResult);
+        MockHttpServletResponse response = mvcResult.getResponse();
+        String outputInJson = response.getContentAsString();
+        Assert.assertEquals(outputInJson, userJson);
+    }
+
+    @Test
+    public void givenLogin_WhenUserBodyPassed_ShouldReturnUser() throws Exception {
+        User user = new User("Aju", "Aju@123", "ajusanas@gmail.com", "Mumbai");
+        String userJson = this.mapToJson(user);
+        given(userService.login(any(String.class), any(String.class))).willReturn(user);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/login?userName=Aju&password=Aju@123")
                 .contentType(MediaType.APPLICATION_JSON);
         MvcResult mvcResult = this.mockMvc.perform(requestBuilder)
                 .andReturn();
