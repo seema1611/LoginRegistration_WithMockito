@@ -1,8 +1,12 @@
+/*********************************************************************
+ * @purpose : Test the controller class
+ * @author  : Seema Rajpure
+ * @Date    : 27/06/2020
+ *********************************************************************/
 package com.loginregistration.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.loginregistration.controller.UserController;
 import com.loginregistration.model.User;
 import com.loginregistration.service.IUserService;
 import org.junit.Assert;
@@ -28,28 +32,49 @@ public class UserControllerMockTest {
     @MockBean
     IUserService userService;
 
+    /**+
+     *
+     * @param object
+     * @return : Write data in JSON
+     * @throws JsonProcessingException
+     */
 
     private String mapToJson(Object object) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.writeValueAsString(object);
     }
 
+    //TC-1 -> Correct and not null Register data passed here
     @Test
-    public void givenRegisterApi_WhenUserBodyPassed_ShouldReturnUser() throws Exception {
+    public void givenRegister_WhenUserBodyPassed_ShouldReturnUser() throws Exception {
         User user = new User("Aju", "Aju@123", "ajusanas@gmail.com", "Mumbai");
         String userJson = this.mapToJson(user);
         given(userService.register(any(User.class))).willReturn(user);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/register")
                 .accept(MediaType.APPLICATION_JSON).content(userJson)
                 .contentType(MediaType.APPLICATION_JSON);
-        MvcResult mvcResult = this.mockMvc.perform(requestBuilder)
-                .andReturn();
-        System.out.println(mvcResult);
+        MvcResult mvcResult = this.mockMvc.perform(requestBuilder).andReturn();
         MockHttpServletResponse response = mvcResult.getResponse();
         String outputInJson = response.getContentAsString();
         Assert.assertEquals(outputInJson, userJson);
     }
 
+    //TC-2 -> Null data is passed here
+    @Test
+    public void givenRegister_WhenUserBodyPassedNull_ShouldReturnFalse() throws Exception {
+        User user = new User();
+        String userJson = this.mapToJson(user);
+        given(userService.register(any(User.class))).willReturn(user);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/register")
+                .accept(MediaType.APPLICATION_JSON).content(userJson)
+                .contentType(MediaType.APPLICATION_JSON);
+        MvcResult mvcResult = this.mockMvc.perform(requestBuilder).andReturn();
+        MockHttpServletResponse response = mvcResult.getResponse();
+        String outputInJson = response.getContentAsString();
+        Assert.assertEquals(outputInJson, userJson);
+    }
+
+    //TC-3 -> Register data is passed and login the user
     @Test
     public void givenLogin_WhenUserBodyPassed_ShouldReturnUser() throws Exception {
         User user = new User("Aju", "Aju@123", "ajusanas@gmail.com", "Mumbai");
@@ -57,25 +82,7 @@ public class UserControllerMockTest {
         given(userService.login(any(String.class), any(String.class))).willReturn(user);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/login?userName=Aju&password=Aju@123")
                 .contentType(MediaType.APPLICATION_JSON);
-        MvcResult mvcResult = this.mockMvc.perform(requestBuilder)
-                .andReturn();
-        System.out.println(mvcResult);
-        MockHttpServletResponse response = mvcResult.getResponse();
-        String outputInJson = response.getContentAsString();
-        Assert.assertEquals(outputInJson, userJson);
-    }
-
-    @Test
-    public void givenRegisterApi_WhenUserBodyPassedNull_ShouldReturnFalse() throws Exception {
-        User user = new User();
-        String userJson = this.mapToJson(user);
-        given(userService.register(any(User.class))).willReturn(user);
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/register")
-                .accept(MediaType.APPLICATION_JSON).content(userJson)
-                .contentType(MediaType.APPLICATION_JSON);
-        MvcResult mvcResult = this.mockMvc.perform(requestBuilder)
-                .andReturn();
-        System.out.println(mvcResult);
+        MvcResult mvcResult = this.mockMvc.perform(requestBuilder).andReturn();
         MockHttpServletResponse response = mvcResult.getResponse();
         String outputInJson = response.getContentAsString();
         Assert.assertEquals(outputInJson, userJson);

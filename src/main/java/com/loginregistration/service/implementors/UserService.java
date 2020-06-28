@@ -1,5 +1,10 @@
-package com.loginregistration.service.implementors;
+/*********************************************************************
+ * @purpose : UserSerive class implement the business logic
+ * @author  : Seema Rajpure
+ * @Date    : 26/06/2020
+ *********************************************************************/
 
+package com.loginregistration.service.implementors;
 
 import com.loginregistration.model.User;
 import com.loginregistration.repository.IUserRepository;
@@ -15,11 +20,26 @@ public class UserService implements IUserService {
     @Autowired
     IUserRepository userRepository;
 
+    /**+
+     *
+     * @purpose : Used to registerd user data
+     * @param user
+     * @return : Sava register data
+     */
+
     @Override
     public User register(User user) {
         user.setRegisterDate(LocalDateTime.now());
         return userRepository.save(user);
     }
+
+    /**+
+     *
+     * @purpose : Used for check UserName and password mathches to the database entries or NOT
+     * @param userName
+     * @param password
+     * @return : UseName and Password
+     */
 
     @Override
     public User login(String userName, String password) {

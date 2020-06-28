@@ -1,3 +1,9 @@
+/*********************************************************************
+ * @purpose : User model used to convert data into object
+ * @author  : Seema Rajpure
+ * @Date    : 25/06/2020
+ *********************************************************************/
+
 package com.loginregistration.model;
 
 import javax.persistence.Entity;
