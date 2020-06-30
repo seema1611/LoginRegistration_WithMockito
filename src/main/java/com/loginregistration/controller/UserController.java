@@ -6,11 +6,13 @@
 
 package com.loginregistration.controller;
 
+import com.loginregistration.model.ResponseDto;
 import com.loginregistration.model.User;
 import com.loginregistration.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -31,26 +33,14 @@ public class UserController {
     }
 
     /**+
-     * @purpose  : Used for handling the login request and response
-     * @param userName
-     * @param password
-     * @return : UserName and Password
-     */
-    @PostMapping ("/login")
-    public User login (@RequestParam (value = "userName") String userName,
-                       @RequestParam (value = "password") String password) {
-        return userService.login(userName, password);
-    }
-
-    /**+
      *
      * @param emailId
      * @param password
      * @return :  UserName and Password
      */
     @PostMapping ("/loginwithemail")
-    public ResponseEntity<User> loginUser(@RequestParam (value = "emailId") String emailId,
-                                          @RequestParam (value = "password") String password) {
-        return new ResponseEntity<User>(userService.loginUserUsingEmailId(emailId,password), HttpStatus.OK);
+    public User loginUser(@RequestParam (value = "password") String password,
+                                          @RequestParam (value = "emailId") String emailId) {
+        return  userService.loginUserUsingEmailId(password,emailId);
     }
 }
