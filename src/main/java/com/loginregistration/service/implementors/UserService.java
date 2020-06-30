@@ -18,7 +18,7 @@ import java.util.List;
 @Service
 public class UserService implements IUserService {
     @Autowired
-    IUserRepository userRepository;
+    private IUserRepository userRepository;
 
     /**+
      *
@@ -40,7 +40,6 @@ public class UserService implements IUserService {
      * @param password
      * @return : UseName and Password
      */
-
     @Override
     public User login(String userName, String password) {
         List<User> byUsername = userRepository.findAll();
@@ -50,5 +49,17 @@ public class UserService implements IUserService {
                 .findFirst()
                 .get();
         return user;
+    }
+
+    /**+
+     *
+     * @purpose : Used for check UserName and password mathches to the database entries or NOT
+     * @param emailId
+     * @param password
+     * @return : UserName and Password
+     */
+    @Override
+    public User loginUserUsingEmailId(String emailId, String password) {
+        return userRepository.findUserByEmailIdAndPassword(emailId,password);
     }
 }

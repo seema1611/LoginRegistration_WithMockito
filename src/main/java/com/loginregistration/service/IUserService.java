@@ -15,7 +15,6 @@ public interface IUserService {
      * @purpose : To managed register method in service class
      * @param user
      */
-
     User register(User user);
 
     /**+
@@ -24,6 +23,13 @@ public interface IUserService {
      * @param userName
      * @param password
      */
-
     User login(String userName, String password);
+
+    /**+
+     *
+     * @purpose : To login the user
+     * @param emailId
+     * @param password
+     */
+    User loginUserUsingEmailId(String emailId, String password);
 }
