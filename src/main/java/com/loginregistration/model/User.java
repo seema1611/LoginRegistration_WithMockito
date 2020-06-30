@@ -6,10 +6,7 @@
 
 package com.loginregistration.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -22,6 +19,7 @@ public class User {
 
     public String password;
 
+    @Column(unique = true)
     public String emailId;
 
     public String address;

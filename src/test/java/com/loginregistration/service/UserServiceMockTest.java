@@ -47,15 +47,4 @@ public class UserServiceMockTest {
         User registeredUser = userService.register(user);
         Assert.assertEquals(registeredUser, user);
     }
-
-    //TC-3 -> Test case for login the user
-    @Test
-    public void givenUser_WhenLogin_ShouldReturnUser () {
-        User user = new User("Aju", "Aju@123", "ajusanas@gmail.com", "Mumbai");
-        List<User> userList = new ArrayList<>();
-        userList.add(user);
-        when(userRepository.findAll()).thenReturn(userList);
-        User loginUser = userService.loginUserUsingEmailId("Aju@123","ajusanas@gmail.com");
-        Assert.assertEquals(loginUser,user);
-    }
 }

@@ -50,7 +50,7 @@ public class UserControllerMockTest {
         User user = new User("Aju", "Aju@123", "ajusanas@gmail.com", "Mumbai");
         String userJson = this.mapToJson(user);
         given(userService.register(any(User.class))).willReturn(user);
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/register")
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/register")
                 .accept(MediaType.APPLICATION_JSON).content(userJson)
                 .contentType(MediaType.APPLICATION_JSON);
         MvcResult mvcResult = this.mockMvc.perform(requestBuilder).andReturn();
@@ -65,22 +65,8 @@ public class UserControllerMockTest {
         User user = new User();
         String userJson = this.mapToJson(user);
         given(userService.register(any(User.class))).willReturn(user);
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/register")
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/register")
                 .accept(MediaType.APPLICATION_JSON).content(userJson)
-                .contentType(MediaType.APPLICATION_JSON);
-        MvcResult mvcResult = this.mockMvc.perform(requestBuilder).andReturn();
-        MockHttpServletResponse response = mvcResult.getResponse();
-        String outputInJson = response.getContentAsString();
-        Assert.assertEquals(outputInJson, userJson);
-    }
-
-    //TC-3 -> Register data is passed and login the user
-    @Test
-    public void givenLogin_WhenUserBodyPassed_ShouldReturnUser() throws Exception {
-        User user = new User("Aju", "Aju@123", "ajusanas@gmail.com", "Mumbai");
-        String userJson = this.mapToJson(user);
-        given(userService.login(any(String.class), any(String.class))).willReturn(user);
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/login?userName=Aju&password=Aju@123")
                 .contentType(MediaType.APPLICATION_JSON);
         MvcResult mvcResult = this.mockMvc.perform(requestBuilder).andReturn();
         MockHttpServletResponse response = mvcResult.getResponse();
