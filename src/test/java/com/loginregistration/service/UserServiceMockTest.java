@@ -55,7 +55,7 @@ public class UserServiceMockTest {
         List<User> userList = new ArrayList<>();
         userList.add(user);
         when(userRepository.findAll()).thenReturn(userList);
-        User loginUser = userService.login("Aju","Aju@123");
+        User loginUser = userService.loginUserUsingEmailId("Aju@123","ajusanas@gmail.com");
         Assert.assertEquals(loginUser,user);
     }
 }

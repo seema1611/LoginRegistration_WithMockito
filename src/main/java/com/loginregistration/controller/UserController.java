@@ -33,6 +33,18 @@ public class UserController {
     }
 
     /**+
+     * @purpose  : Used for handling the login request and response
+     * @param userName
+     * @param password
+     * @return : UserName and Password
+     */
+    @PostMapping ("/login")
+    public User login (@RequestParam (value = "userName") String userName,
+                       @RequestParam (value = "password") String password) {
+        return userService.login(userName, password);
+    }
+
+    /**+
      *
      * @param emailId
      * @param password

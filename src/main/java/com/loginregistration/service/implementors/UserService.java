@@ -36,6 +36,24 @@ public class UserService implements IUserService {
     /**+
      *
      * @purpose : Used for check UserName and password mathches to the database entries or NOT
+     * @param userName
+     * @param password
+     * @return : UseName and Password
+     */
+    @Override
+    public User login(String userName, String password) {
+        List<User> byUsername = userRepository.findAll();
+        User user = byUsername.stream()
+                .filter(userData -> userData.getUserName().equals(userName))
+                .filter(userData -> userData.getPassword().equals(password))
+                .findFirst()
+                .get();
+        return user;
+    }
+
+    /**+
+     *
+     * @purpose : Used for check UserName and password mathches to the database entries or NOT
      * @param emailId
      * @param password
      * @return : UserName and Password
